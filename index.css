@@ -52,6 +52,7 @@ font-family: 'Patrick Hand', cursive; */
 }
 
 .dropdown-content {
+  cursor: pointer;
   display: none;
   position: absolute;
   background-color: #8FBC8F;
@@ -61,6 +62,7 @@ font-family: 'Patrick Hand', cursive; */
 }
 
 .dropdown-content a {
+  cursor: pointer;
   float: none;
   color: black;
   padding: 12px 16px;
