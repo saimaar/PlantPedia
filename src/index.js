@@ -2,7 +2,7 @@ const divDropContent = document.getElementById('dropdown-genera')
 const divPlantContent = document.getElementById('dropdown-plants')
 const genusButton = document.getElementById('button-genera')
 const plantButton =  document.getElementById('button-plant')
-
+const plantCollection = document.querySelector(".plant-collection")
 
 
 fetch("http://localhost:3000/families")
@@ -13,6 +13,7 @@ fetch("http://localhost:3000/families")
   familyArray.forEach((family) => {
     familyNameOnDrp(family)
     plantNameOnDrp(family)
+    indexPage(family)
   })
 
 //------------------Genus Name ----------------------------------------//
@@ -33,10 +34,21 @@ fetch("http://localhost:3000/families")
     } else {
       divPlantContent.classList.add("show")
     }
-
   }) // end of addEventListener of plant button
-
 })  // end of first fetch
+
+//====================Home Page addEventListener ====================//
+function indexPage(family){
+  family.plants.forEach((plantObj) => {
+    const plantCard = document.createElement("div")
+    plantCard.className = "card"
+    const img = document.createElement("img")
+    img.className = "plant-img"
+    img.src = plantObj.image
+    plantCard.append(img)
+    plantCollection.append(plantCard)
+  })
+}
 
 
 //====================genusName addEventListener ====================//

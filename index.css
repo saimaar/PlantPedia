@@ -78,3 +78,26 @@ font-family: 'Patrick Hand', cursive; */
 .show {
   display: block;
 }
+
+/* --------------------------------Plant Collection---------------------------------------- */
+
+.plant-collection {
+  margin: 2rem;
+}
+.card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: fit-content;
+  height: fit-content;
+  display: inline-grid;
+  margin: 1rem 2rem;
+
+}
+
+
+.plant-img {
+  justify-self: center;
+  height: 20rem;
+  width: 330px;
+}
