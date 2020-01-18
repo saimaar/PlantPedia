@@ -1,0 +1,28 @@
+/* font-family: 'Pacifico', cursive;
+font-family: 'Shadows Into Light', cursive;
+font-family: 'Port Lligat Sans', sans-serif;
+font-family: 'Abril Fatface', cursive;
+font-family: 'Righteous', cursive;
+font-family: 'Caveat', cursive;
+font-family: 'Patrick Hand', cursive; */
+
+/* Header/Logo Title */
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  background-image: url("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/v199-bb-40-leaf_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1800&s=65f3e6e26a7a024379d239d30131338d");
+  background-position: center;
+  position: relative;
+  background-size: 770px;
+  color: #2F4F4F;
+  font-size: 30px;
+  font-family:  'Righteous', cursive;
+}
+
+.header-subtitle {
+  color: #2F4F4F;
+  font-size: 30px;
+  font-family: 'Patrick Hand', cursive; */
+
+}
