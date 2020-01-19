@@ -151,14 +151,20 @@ h3 {
 
 .back-button {
   cursor: pointer;
-  align-content: right;
-  display: contents;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  right: 9%;
+  bottom: 18%;
   font-size: 18px;
-  padding: 15px 32px;
+  height: 10%;
+  background-color: #4CAF50;
+  font-family: 'Abril Fatface', cursive;
+  color: white;
 }
 
 .edit-delete{
-  cursor: pointer;
+cursor: pointer;
 background-color: #4CAF50;
  border: none;
  color: white;
@@ -170,3 +176,20 @@ background-color: #4CAF50;
  font-family: 'Abril Fatface', cursive;
 
 }
+
+.delete{
+height: 28px;
+width: 69px;
+display: flex;
+position: absolute;
+right: 9%;
+bottom: -18%;
+}
+
+
+
+/* cursor: pointer;
+align-content: right;
+display: contents;
+font-size: 18px;
+padding: 15px 32px; */

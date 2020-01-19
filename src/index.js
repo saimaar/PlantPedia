@@ -24,6 +24,7 @@ fetch("http://localhost:3000/families")
      divDropContent.classList.remove("show")
    } else {
      divDropContent.classList.add("show")
+     //add show to display the inner content of the drop down
    }
  }) // end of addEventListener
 
@@ -42,6 +43,7 @@ fetch("http://localhost:3000/families")
 function indexPage(family){
   family.plants.forEach((plantObj) => {
     const plantCard = document.createElement("div")
+    plantCard.dataset.id = `p${plantObj.id}`
     plantCard.className = "card"
     const plantImg = document.createElement("img")
     plantImg.className = "plant-img"
@@ -53,12 +55,13 @@ function indexPage(family){
 
     plantImg.addEventListener("click", (evt) => {
         plantCollection.classList.add("hide")
+        // hide is display: none is css
         fetch(`http://localhost:3000/plants/${plantObj.id}`)
         .then((resp) => {
           return resp.json()
         })
         .then((plant) => {
-          soloDisplayOnDom(plant)
+          soloDisplayOnDom(plant, plantCard)
         })
 
 
@@ -105,23 +108,51 @@ function soloDisplayOnDom(plant){
 //---------------backButton--------------------------------
   const backButton = document.createElement("button")
   backButton.className = "back-button"
-  backButton.innerText = "go back"
+  backButton.innerText = "back"
 
 
-  //--------------delete Button-----------------------------
+//--------------delete Button-----------------------------
+  const deleteButton = document.createElement("button")
+  deleteButton.className = "edit-delete"
+  deleteButton.classList.add("delete")
+  deleteButton.innerText = "delete"
 
 
   soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton)
-  plantSoloCard.append( soloImage, soloDiv, backButton)
+  plantSoloCard.append(soloImage, soloDiv, backButton, deleteButton)
   container.append(plantSoloCard)
 
   goBackButton(backButton)
   editForm(editButton, plantDesc, plant)
   loveCounter(loveButton, plant, loves)
+  deleteOnePlant(deleteButton, plant, plantSoloCard)
 
 
 }//end of function
 
+
+//--------------------Delete Plant from the SHOW PAGE -----------------------------------------//
+function deleteOnePlant(deleteButton, plant, plantSoloCard){
+  deleteButton.addEventListener("click", (evt) => {
+      deleteFetch(plant.id)
+      .then((response) => {
+        plantSoloCard.remove()
+        divId = "p" + response.plant.id
+        const imageDiv = plantCollection.querySelector(`div[data-id="${divId}"]`)
+        imageDiv.remove()
+        plantCollection.classList.remove("hide")
+    })
+  })
+}
+
+
+function deleteFetch(plantId){
+  return fetch(`http://localhost:3000/plants/${plantId}`, {
+    method: "DELETE",
+  })
+    .then(resp => resp.json())
+}
+//--------------------------LOVES COUNTER --------------------------------//
 function loveCounter(loveButton, plant, loves){
   loveButton.addEventListener("click", (evt) => {
     let loveCounter = parseInt(loves.innerText.split(" ")[0]) + 1
@@ -141,6 +172,7 @@ function loveCounter(loveButton, plant, loves){
   }) // end of Lovebutton addEventListener
 }
 
+//--------------------EDIT Description -----------------------------------------//
 function editForm(editButton, plantDesc, plant){
   editButton.addEventListener("click", (evt) => {
     // debugger
@@ -175,16 +207,13 @@ function editForm(editButton, plantDesc, plant){
     })// end of edit button
   } // end of edit function
 
-
+//--------------------Go Back to Index Page -----------------------------------------//
 function goBackButton(backButton){
   backButton.addEventListener("click", (evt) => {
       plantCollection.classList.remove("hide")
       container.innerHTML = "";
   })
 }
-
-
-
 
 //====================genusName addEventListener ====================//
 function familyNameOnDrp(family){
