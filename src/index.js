@@ -83,6 +83,11 @@ function soloDisplayOnDom(plant){
   desch2.innerText = "Description"
   const soloDiv = document.createElement("div")
   soloDiv.className = "name-desc-container"
+  const editButton = document.createElement("edit")
+  editButton.innerText = "edit"
+  editButton.className = "edit-delete"
+
+
 
   const loves = document.createElement("div")
   loves.innerText = `${plant.loves} loves`
@@ -97,22 +102,36 @@ function soloDisplayOnDom(plant){
   carePara.className = "desc"
   carePara.innerText = plant.care
 
-  const xButton = document.createElement("button")
-  xButton.className = "x-button"
-  xButton.innerText = "x"
+  const backButton = document.createElement("button")
+  backButton.className = "back-button"
+  backButton.innerText = "go back"
 
 
-  soloDiv.append(soloName, desch2, plantDesc, careh2, carePara, loves, loveButton)
-  plantSoloCard.append( soloImage, soloDiv, xButton)
+  soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton)
+  plantSoloCard.append( soloImage, soloDiv, backButton)
   container.append(plantSoloCard)
 
+  goBackButton(backButton)
 
-  xButton.addEventListener("click", (evt) => {
-      plantCollection.classList.remove("hide")
 
+  editButton.addEventListener("click", (evt) => {
+      fetch()
   })
 
+
+
+
+
+
 }//end of function
+
+function goBackButton(backButton){
+  backButton.addEventListener("click", (evt) => {
+      plantCollection.classList.remove("hide")
+      container.innerHTML = "";
+  })
+}
+
 
 
 

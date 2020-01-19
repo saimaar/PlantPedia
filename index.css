@@ -148,9 +148,24 @@ h3 {
 
 }
 
-.x-button {
+.back-button {
+  cursor: pointer;
   align-content: right;
   display: contents;
   font-size: 18px;
-  background-color: #8FBC8F;
+  padding: 15px 32px;
+}
+
+.edit-delete{
+  cursor: pointer;
+background-color: #4CAF50;
+ border: none;
+ color: white;
+ padding: 3px 11px;
+ text-align: center;
+ text-decoration: none;
+ display: inline-block;
+ font-size: 16px;
+ font-family: 'Abril Fatface', cursive;
+
 }
