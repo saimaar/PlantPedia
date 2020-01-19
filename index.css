@@ -95,9 +95,62 @@ font-family: 'Patrick Hand', cursive; */
 
 }
 
-
+h3 {
+  font-family: 'Caveat', cursive;
+}
 .plant-img {
   justify-self: center;
   height: 20rem;
   width: 330px;
+}
+
+.hide {
+  display: none;
+}
+
+/* ---------------------------SOLO PLANT------------------------------------------------------- */
+.solo-card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 4rem;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  margin: 1rem 2rem;
+
+}
+
+.solo-img {
+  justify-self: center;
+  height: 20rem;
+  width: 330px;
+}
+
+.container {
+  padding:20px;
+}
+
+.desc{
+  text-align: center;
+  font-family: 'Port Lligat Sans', sans-serif;
+  font-size: large;
+}
+
+.name-desc-container{
+  padding: 2em;
+  display: flow-root;
+
+}
+
+.love-button {
+  border-radius: 50%;
+  width: 50px;
+
+}
+
+.x-button {
+  align-content: right;
+  display: contents;
+  font-size: 18px;
+  background-color: #8FBC8F;
 }
