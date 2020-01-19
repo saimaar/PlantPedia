@@ -75,7 +75,7 @@ function soloDisplayOnDom(plant){
   soloImage.src = plant.image
   const soloName = document.createElement("h2")
   soloName.innerText = `${plant.name}  | Genus: ${plant.family.name}`
-
+//---------------Plant description --------------------------------
   const plantDesc = document.createElement("p")
   plantDesc.className = "desc"
   plantDesc.innerText = plant.description
@@ -87,7 +87,7 @@ function soloDisplayOnDom(plant){
   editButton.innerText = "edit"
   editButton.className = "edit-delete"
 
-
+//---------------Plant Loves --------------------------------
 
   const loves = document.createElement("div")
   loves.innerText = `${plant.loves} loves`
@@ -95,16 +95,20 @@ function soloDisplayOnDom(plant){
   const loveButton = document.createElement("img")
   loveButton.className = "love-button"
   loveButton.src =  "https://feea.org/wp-content/uploads/2018/05/fb-love-button.png"
-
+//---------------Plant Care --------------------------------
   const careh2 = document.createElement("h2")
   careh2.innerText = "Care"
   const carePara = document.createElement("p")
   carePara.className = "desc"
   carePara.innerText = plant.care
 
+//---------------backButton--------------------------------
   const backButton = document.createElement("button")
   backButton.className = "back-button"
   backButton.innerText = "go back"
+
+
+  //--------------delete Button-----------------------------
 
 
   soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton)
@@ -112,13 +116,38 @@ function soloDisplayOnDom(plant){
   container.append(plantSoloCard)
 
   goBackButton(backButton)
+  editForm(editButton, plantDesc, plant)
+  loveCounter(loveButton, plant, loves)
 
 
+}//end of function
+
+function loveCounter(loveButton, plant, loves){
+  loveButton.addEventListener("click", (evt) => {
+    let loveCounter = parseInt(loves.innerText.split(" ")[0]) + 1
+    fetch(`http://localhost:3000/plants/${plant.id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        loves: loveCounter
+      })
+    })
+    .then(resp => resp.json())
+    .then((updatedPlant) => {
+      loves.innerText =  parseInt(updatedPlant.loves) + " " + "loves"
+    })
+  }) // end of Lovebutton addEventListener
+}
+
+function editForm(editButton, plantDesc, plant){
   editButton.addEventListener("click", (evt) => {
     // debugger
       if (editButton.disabled === false){
         const editForm = document.createElement("form");
-        editForm.innerHTML = `<textarea rows="4" cols="50" type="text" name="description"></textarea><br>
+        editForm.innerHTML = `<textarea rows="4" cols="50" type="text" name="description"
+        placeholder= "edit this description...."></textarea><br>
         <input type="submit" value="Submit">`
         plantDesc.append(editForm)
 
@@ -134,25 +163,18 @@ function soloDisplayOnDom(plant){
             body: JSON.stringify({
              description: newDesc
             })
-
           })
           .then(resp => resp.json())
           .then((updatedPlantObj) => {
             plantDesc.innerText = updatedPlantObj.description
             editButton.disabled = false;
           })
-
         })// end of edit form
         editButton.disabled = true;
       } // end of if
-  }) // end of edit button
+    })// end of edit button
+  } // end of edit function
 
-
-
-
-
-
-}//end of function
 
 function goBackButton(backButton){
   backButton.addEventListener("click", (evt) => {

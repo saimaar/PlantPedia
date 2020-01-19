@@ -143,6 +143,7 @@ h3 {
 }
 
 .love-button {
+  cursor: pointer;
   border-radius: 50%;
   width: 50px;
 
