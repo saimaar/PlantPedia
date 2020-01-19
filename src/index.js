@@ -38,7 +38,7 @@ fetch("http://localhost:3000/families")
   }) // end of addEventListener of plant button
 })  // end of first fetch
 
-//====================Home Page addEventListener ====================//
+//====================Home Page addEventListener to plant image ====================//
 function indexPage(family){
   family.plants.forEach((plantObj) => {
     const plantCard = document.createElement("div")
@@ -83,7 +83,7 @@ function soloDisplayOnDom(plant){
   desch2.innerText = "Description"
   const soloDiv = document.createElement("div")
   soloDiv.className = "name-desc-container"
-  const editButton = document.createElement("edit")
+  const editButton = document.createElement("button")
   editButton.innerText = "edit"
   editButton.className = "edit-delete"
 
@@ -115,8 +115,37 @@ function soloDisplayOnDom(plant){
 
 
   editButton.addEventListener("click", (evt) => {
-      fetch()
-  })
+    // debugger
+      if (editButton.disabled === false){
+        const editForm = document.createElement("form");
+        editForm.innerHTML = `<textarea rows="4" cols="50" type="text" name="description"></textarea><br>
+        <input type="submit" value="Submit">`
+        plantDesc.append(editForm)
+
+        editForm.addEventListener("submit", (evt) => {
+          evt.preventDefault()
+          let newDesc = evt.target["description"].value
+
+          fetch(`http://localhost:3000/plants/${plant.id}`, {
+            method: "PATCH",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+             description: newDesc
+            })
+
+          })
+          .then(resp => resp.json())
+          .then((updatedPlantObj) => {
+            plantDesc.innerText = updatedPlantObj.description
+            editButton.disabled = false;
+          })
+
+        })// end of edit form
+        editButton.disabled = true;
+      } // end of if
+  }) // end of edit button
 
 
 
