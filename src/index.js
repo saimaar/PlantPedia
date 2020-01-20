@@ -3,11 +3,16 @@ const genusAll = document.createElement("a")
 genusAll.className = "all"
 genusAll.innerText = "all";
 divDropContent.appendChild(genusAll)
-
 genusAll.addEventListener("click", (evt) => {
   plantCollection.classList.remove("hide")
   filterGenus.innerHTML = ""
 })
+
+let famArr = [];
+
+const formButton = document.querySelector(".formbtn")
+const formDiv = document.querySelector(".create-form")
+
 const genusButton = document.getElementById('button-genera')
 const plantCollection = document.querySelector(".plant-collection")
 const main = document.querySelector(".main")
@@ -19,11 +24,12 @@ fetch("http://localhost:3000/families")
   return resp.json()
 })
 .then((familyArray) => {
+  famArr = familyArray
   familyArray.forEach((family) => {
     familyNameOnDrp(family)
     indexPage(family)
   })
-//------------------Genus Name ----------------------------------------//
+//------------------Genus Name ------------------------------------------------//
   genusButton.addEventListener("click", (evt) => {
 //line 17 can be rewritten as evt.target.nextElementSibling.className.includes("show")
     if (divDropContent.className.includes("show")){
@@ -35,7 +41,85 @@ fetch("http://localhost:3000/families")
  }) // end of addEventListener
 })  // end of first fetch
 
-//====================Home Page addEventListener to plant image ====================//
+//---------------------Create Form --------------------------------------------//
+
+formButton.addEventListener("click", (evt) => {
+  plantCollection.classList.add("hide")
+  const form = document.createElement("form")
+  const inputName = document.createElement("input")
+  const br = document.createElement("br")
+  inputName.type = "text"
+  inputName.name = "lname"
+  inputName.placeholder= "plant name.."
+
+  const inputDesc = document.createElement("input")
+  inputDesc.type = "text"
+  inputDesc.name = "desc"
+  inputDesc.placeholder= "plant desc.."
+
+  const inputCare = document.createElement("input")
+  inputCare.type = "text"
+  inputCare.name = "care"
+  inputCare.placeholder= "plant care.."
+
+  const inputImage = document.createElement("input")
+  inputImage.type = "text"
+  inputImage.name = "image"
+  inputImage.placeholder= "Image url.."
+
+
+  const selectFamily = document.createElement("select")
+  const inputSubmit = document.createElement("input")
+  inputSubmit.type = "submit";
+  inputSubmit.value = "submit";
+  form.append(inputImage, inputName, inputDesc, inputCare, br, selectFamily, inputSubmit)
+
+  famArr.forEach((famObj) => {
+    const option = document.createElement("option")
+    option.value = famObj.id
+    option.innerText = famObj.name
+    selectFamily.appendChild(option)
+  })
+  formDiv.append(form)
+
+  form.addEventListener("submit", (evt) => {
+    evt.preventDefault()
+
+    let newPlantName = evt.target["lname"].value
+    let newPlantDesc = evt.target["desc"].value
+    let newPlantCare = evt.target["care"].value
+    let newPlantImg = evt.target["image"].value
+    let newPlantFamily = evt.target.querySelector("select").value
+
+    fetch(`http://localhost:3000/plants`,{
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify( {
+        name: newPlantName,
+        description: newPlantDesc,
+        loves: 0,
+        care: newPlantCare,
+        image: newPlantImg,
+        family_id: newPlantFamily
+      })
+    })
+    .then(resp => resp.json())
+    .then((newPlant) => {
+        debugger
+    })
+  }) // form addEventListener
+
+}) //form button addEventListener
+
+
+
+// evt.target.querySelector("select").value
+
+
+
+//====================Home Page addEventListener to plant image ================/
 function indexPage(family){
   family.plants.forEach((plantObj) => {
     const plantCard = document.createElement("div")

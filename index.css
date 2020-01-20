@@ -79,6 +79,18 @@ font-family: 'Patrick Hand', cursive; */
   display: block;
 }
 
+
+.formbtn{
+  cursor: pointer;
+font-size: 16px;
+border: none;
+outline: none;
+color: #608b35;
+padding: 14px 16px;
+margin: 1px;
+float: left;
+}
+
 /* --------------------------------Plant Collection---------------------------------------- */
 
 .plant-collection {
