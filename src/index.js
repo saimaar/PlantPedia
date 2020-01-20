@@ -8,16 +8,12 @@ genusAll.addEventListener("click", (evt) => {
   plantCollection.classList.remove("hide")
   filterGenus.innerHTML = ""
 })
-
-
-const divPlantContent = document.getElementById('dropdown-plants')
 const genusButton = document.getElementById('button-genera')
-const plantButton =  document.getElementById('button-plant')
 const plantCollection = document.querySelector(".plant-collection")
 const main = document.querySelector(".main")
 const container = document.querySelector(".container")
 const filterGenus = document.querySelector(".filtered-genera")
-
+//-----------------------First Fetch------------------------------------------------//
 fetch("http://localhost:3000/families")
 .then((resp) => {
   return resp.json()
@@ -25,10 +21,8 @@ fetch("http://localhost:3000/families")
 .then((familyArray) => {
   familyArray.forEach((family) => {
     familyNameOnDrp(family)
-    plantNameOnDrp(family)
     indexPage(family)
   })
-
 //------------------Genus Name ----------------------------------------//
   genusButton.addEventListener("click", (evt) => {
 //line 17 can be rewritten as evt.target.nextElementSibling.className.includes("show")
@@ -39,16 +33,6 @@ fetch("http://localhost:3000/families")
      //add show to display the inner content of the drop down
    }
  }) // end of addEventListener
-
-//================PLant Name ==========================================//
-  plantButton.addEventListener("click", (evt) => {
-
-    if (divPlantContent.className.includes("show")){
-      divPlantContent.classList.remove("show")
-    } else {
-      divPlantContent.classList.add("show")
-    }
-  }) // end of addEventListener of plant button
 })  // end of first fetch
 
 //====================Home Page addEventListener to plant image ====================//
@@ -64,6 +48,8 @@ function indexPage(family){
     h3.innerText = plantObj.name
     plantCard.append(plantImg, h3)
     plantCollection.append(plantCard)
+
+if (plantImg){
     plantImg.addEventListener("click", (evt) => {
         plantCollection.classList.add("hide")
         // hide is display: none is css
@@ -73,10 +59,11 @@ function indexPage(family){
         })
         .then((plant) => {
           soloDisplayOnDom(plant, plantCard)
+          genusButton.classList.add("hide")
+
         })
-
-
-    })// end of addEventListener
+      })// end of addEventListener
+    }// end of if
   })//end of forEach
 }// end of indexPage
 
@@ -152,6 +139,7 @@ function deleteOnePlant(deleteButton, plant, plantSoloCard){
         const imageDiv = plantCollection.querySelector(`div[data-id="${divId}"]`)
         imageDiv.remove()
         plantCollection.classList.remove("hide")
+        genusButton.classList.remove("hide")
     })
   })
 }
@@ -223,6 +211,7 @@ function goBackButton(backButton){
   backButton.addEventListener("click", (evt) => {
       plantCollection.classList.remove("hide")
       container.innerHTML = "";
+        genusButton.classList.remove("hide")
   })
 }
 
@@ -231,6 +220,7 @@ function familyNameOnDrp(family){
     const genusName = document.createElement("a")
     genusName.innerText = family.name
     divDropContent.append(genusName)
+
     genusName.addEventListener("click", (evt) => {
       plantCollection.classList.add("hide")
       let famObj = family
@@ -253,13 +243,4 @@ function filterGeneraCard(plantObject){
   filterName.innerText = plantObject.name
   plantFilterCard.append(filterImage, filterName)
   filterGenus.append(plantFilterCard)
-}
-
-//====================plantName addEventListener ====================//
-function plantNameOnDrp(family){
-  family.plants.forEach((plantObj) => {
-    const plantName = document.createElement("a")
-    plantName.innerText = plantObj.name
-    divPlantContent.appendChild(plantName)
-  })
 }
