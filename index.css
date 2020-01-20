@@ -27,7 +27,9 @@ font-family: 'Patrick Hand', cursive; */
 
 }
 
-.main {padding:20px;}
+.main {padding:20px;
+
+}
 
 
 .dropdown {
@@ -134,6 +136,7 @@ h2{
   height: fit-content;
   display: flex;
   margin: 1rem 2rem;
+  background-color: #f4f9f7;
 
 }
 
