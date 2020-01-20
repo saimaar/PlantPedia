@@ -12,13 +12,13 @@ genusAll.addEventListener("click", (evt) => {
 
 let famArr = [];
 
-const createButton = document.querySelector(".formbtn")
+const createButton = document.querySelector(".formbtn") //create plants
 const formDiv = document.querySelector(".form-container")
 
-const genusButton = document.getElementById('button-genera')
-const plantCollection = document.querySelector(".plant-collection")
+const genusButton = document.getElementById('button-genera') //genus button on index page
+const plantCollection = document.querySelector(".plant-collection") //home page with all plants
 const main = document.querySelector(".main")
-const container = document.querySelector(".container")
+const soloContainer = document.querySelector(".container")
 const filterGenus = document.querySelector(".filtered-genera")
 //-----------------------First Fetch------------------------------------------------//
 fetch("http://localhost:3000/families")
@@ -212,7 +212,7 @@ function soloDisplayOnDom(plant){
 
   const loveButton = document.createElement("img")
   loveButton.className = "love-button"
-  loveButton.src =  "https://feea.org/wp-content/uploads/2018/05/fb-love-button.png"
+  loveButton.src =  plant.loves < 50 ? "https://feea.org/wp-content/uploads/2018/05/fb-love-button.png" : `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
 //---------------Plant Care --------------------------------
   const careh2 = document.createElement("h2")
   careh2.innerText = "Care"
@@ -235,7 +235,7 @@ function soloDisplayOnDom(plant){
 
   soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton)
   plantSoloCard.append(soloImage, soloDiv, backButton, deleteButton)
-  container.append(plantSoloCard)
+  soloContainer.append(plantSoloCard)
 
   goBackButton(backButton)
   editForm(editButton, plantDesc, plant)
@@ -271,22 +271,33 @@ function deleteFetch(plantId){
 //--------------------------LOVES COUNTER --------------------------------//
 function loveCounter(loveButton, plant, loves){
   loveButton.addEventListener("click", (evt) => {
+
+
     let loveCounter = parseInt(loves.innerText.split(" ")[0]) + 1
+
+    if (loveCounter <= 50){
     fetch(`http://localhost:3000/plants/${plant.id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        loves: loveCounter
+        loves: loveCounter,
       })
     })
     .then(resp => resp.json())
     .then((updatedPlant) => {
       loves.innerText =  parseInt(updatedPlant.loves) + " " + "loves"
-    })
+  })//end of second .then
+}else {
+    loveButton.src = `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
+  }// end of else
   }) // end of Lovebutton addEventListener
 }
+
+
+
+
 
 //--------------------EDIT Description -----------------------------------------//
 function editForm(editButton, plantDesc, plant){
@@ -327,7 +338,7 @@ function editForm(editButton, plantDesc, plant){
 function goBackButton(backButton){
   backButton.addEventListener("click", (evt) => {
       plantCollection.classList.remove("hide")
-      container.innerHTML = "";
+      soloContainer.innerHTML = "";
         genusButton.classList.remove("hide")
         createButton.classList.remove("hide")
   })
