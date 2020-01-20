@@ -110,6 +110,11 @@ float: left;
 h3 {
   font-family: 'Caveat', cursive;
 }
+
+h2{
+
+  font-family: 'Caveat', cursive;
+}
 .plant-img {
   justify-self: center;
   height: 20rem;
@@ -213,4 +218,31 @@ bottom: -18%;
   height: fit-content;
   display: block;
   margin: 0rem 2rem;
+}
+/*---------------------------Form Container-------------------------------------------------------  */
+
+.form-container{
+  background-color: #4CAF50;
+  background-image: url(https://image.freepik.com/free-vector/golden-pothos-leaf-isolated-white-background_53876-6891.jpg);
+      color: black;
+      border: none;
+      border-radius: 11px;
+      cursor: pointer;
+      padding: 110px;
+      margin: -6px auto;
+      width: fit-content;
+      border-radius: 5px;
+      padding: 20px;
+      font-family: 'Righteous', cursive;
+}
+
+.form{
+display: grid;
+width: fit-content;
+padding: 4px 20px;
+margin: 8px 0;
+/* display: inline-block; */
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
 }

@@ -6,12 +6,14 @@ divDropContent.appendChild(genusAll)
 genusAll.addEventListener("click", (evt) => {
   plantCollection.classList.remove("hide")
   filterGenus.innerHTML = ""
+  createButton.classList.remove("hide")
+  formDiv.innerHTML = ""
 })
 
 let famArr = [];
 
-const formButton = document.querySelector(".formbtn")
-const formDiv = document.querySelector(".create-form")
+const createButton = document.querySelector(".formbtn")
+const formDiv = document.querySelector(".form-container")
 
 const genusButton = document.getElementById('button-genera')
 const plantCollection = document.querySelector(".plant-collection")
@@ -41,38 +43,58 @@ fetch("http://localhost:3000/families")
  }) // end of addEventListener
 })  // end of first fetch
 
-//---------------------Create Form --------------------------------------------//
-
-formButton.addEventListener("click", (evt) => {
+//---------------------Create Form  for ONE PLANT--------------------------------------------//
+ createButton.addEventListener("click", (evt) => {
   plantCollection.classList.add("hide")
   const form = document.createElement("form")
+  form.className = "form"
   const inputName = document.createElement("input")
   const br = document.createElement("br")
+  const label1 = document.createElement("label")
+  label1.for = "lname"
+  label1.innerText = "Plant Name: "
   inputName.type = "text"
   inputName.name = "lname"
   inputName.placeholder= "plant name.."
 
-  const inputDesc = document.createElement("input")
+  const br1 = document.createElement("br")
+  const inputDesc = document.createElement("textarea")
+  inputDesc.style.height = "200px"
+  inputDesc.style.width = "200px"
+  const label2 = document.createElement("label")
+  label2.for = "desc"
+  label2.innerText = "Description: "
   inputDesc.type = "text"
   inputDesc.name = "desc"
   inputDesc.placeholder= "plant desc.."
 
-  const inputCare = document.createElement("input")
+  const br2 = document.createElement("br")
+  const inputCare = document.createElement("textarea")
+  const label3 = document.createElement("label")
+  label3.for = "care"
+  label3.innerText = "Care: "
   inputCare.type = "text"
   inputCare.name = "care"
   inputCare.placeholder= "plant care.."
 
+  const br3 = document.createElement("br")
   const inputImage = document.createElement("input")
+  const label4 = document.createElement("label")
+  label4.for = "image"
+  label4.innerText = "Img-url: "
   inputImage.type = "text"
   inputImage.name = "image"
   inputImage.placeholder= "Image url.."
 
-
+  const br4 = document.createElement("br")
   const selectFamily = document.createElement("select")
+  const label5 = document.createElement("label")
+  label5.for = "select"
+  label5.innerText = "Genus: "
   const inputSubmit = document.createElement("input")
   inputSubmit.type = "submit";
   inputSubmit.value = "submit";
-  form.append(inputImage, inputName, inputDesc, inputCare, br, selectFamily, inputSubmit)
+  form.append(label4, inputImage, br, label1, inputName, br1, label2, inputDesc, br2, label3, inputCare, br3, label5, selectFamily, br4, inputSubmit)
 
   famArr.forEach((famObj) => {
     const option = document.createElement("option")
@@ -80,6 +102,7 @@ formButton.addEventListener("click", (evt) => {
     option.innerText = famObj.name
     selectFamily.appendChild(option)
   })
+  formDiv.innerHTML = ""
   formDiv.append(form)
 
   form.addEventListener("submit", (evt) => {
@@ -107,7 +130,10 @@ formButton.addEventListener("click", (evt) => {
     })
     .then(resp => resp.json())
     .then((newPlant) => {
-        debugger
+      plantCollection.classList.remove("hide")
+      indexPagePlantCard(newPlant)
+      form.innerHTML = ""
+      // soloDisplayOnDom(newPlant)
     })
   }) // form addEventListener
 
@@ -122,34 +148,41 @@ formButton.addEventListener("click", (evt) => {
 //====================Home Page addEventListener to plant image ================/
 function indexPage(family){
   family.plants.forEach((plantObj) => {
-    const plantCard = document.createElement("div")
-    plantCard.dataset.id = `p${plantObj.id}`
-    plantCard.className = "card"
-    const plantImg = document.createElement("img")
-    plantImg.className = "plant-img"
-    plantImg.src = plantObj.image
-    const h3 = document.createElement("h3")
-    h3.innerText = plantObj.name
-    plantCard.append(plantImg, h3)
-    plantCollection.append(plantCard)
-
-if (plantImg){
-    plantImg.addEventListener("click", (evt) => {
-        plantCollection.classList.add("hide")
-        // hide is display: none is css
-        fetch(`http://localhost:3000/plants/${plantObj.id}`)
-        .then((resp) => {
-          return resp.json()
-        })
-        .then((plant) => {
-          soloDisplayOnDom(plant, plantCard)
-          genusButton.classList.add("hide")
-
-        })
-      })// end of addEventListener
-    }// end of if
+      indexPagePlantCard(plantObj)
   })//end of forEach
 }// end of indexPage
+
+function indexPagePlantCard(plantObj){
+  const plantCard = document.createElement("div")
+  plantCard.dataset.id = `p${plantObj.id}`
+  plantCard.className = "card"
+  const plantImg = document.createElement("img")
+  plantImg.className = "plant-img"
+  plantImg.src = plantObj.image
+  const h3 = document.createElement("h3")
+  h3.innerText = plantObj.name
+  plantCard.append(plantImg, h3)
+  plantCollection.append(plantCard)
+
+  if (plantImg){
+      plantImg.addEventListener("click", (evt) => {
+          plantCollection.classList.add("hide")
+          // hide is display: none is css
+          fetch(`http://localhost:3000/plants/${plantObj.id}`)
+          .then((resp) => {
+            return resp.json()
+          })
+          .then((plant) => {
+            soloDisplayOnDom(plant, plantCard)
+            genusButton.classList.add("hide")
+            createButton.classList.add("hide")
+
+          })
+        })// end of addEventListener
+      }// end of if
+}
+
+
 
 //=================================SHOW ONE PLANT =================================//
 function soloDisplayOnDom(plant){
@@ -296,6 +329,7 @@ function goBackButton(backButton){
       plantCollection.classList.remove("hide")
       container.innerHTML = "";
         genusButton.classList.remove("hide")
+        createButton.classList.remove("hide")
   })
 }
 
@@ -310,13 +344,15 @@ function familyNameOnDrp(family){
       let famObj = family
       let plantArray = famObj.plants
       filterGenus.innerHTML = ""
+      createButton.classList.add("hide")
+      formDiv.innerHTML = ""
       plantArray.forEach((plantObject) => {
           filterGeneraCard(plantObject)
     })
   })
 }
 
-
+//-----------------FILTER PLANTS BY GENUS NAME---------------------------
 function filterGeneraCard(plantObject){
   const plantFilterCard = document.createElement("div")
   plantFilterCard.className = "filter-card"
