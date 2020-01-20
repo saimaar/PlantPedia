@@ -12,9 +12,15 @@ genusAll.addEventListener("click", (evt) => {
 
 let famArr = [];
 
+const disLoveBtn = document.createElement("img")
+disLoveBtn.className = "love-button"
+disLoveBtn.src = `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
+
+const divDrop = document.querySelector(".dropdown")
+
+
 const createButton = document.querySelector(".formbtn") //create plants
 const formDiv = document.querySelector(".form-container")
-
 const genusButton = document.getElementById('button-genera') //genus button on index page
 const plantCollection = document.querySelector(".plant-collection") //home page with all plants
 const main = document.querySelector(".main")
@@ -45,6 +51,7 @@ fetch("http://localhost:3000/families")
 
 //---------------------Create Form  for ONE PLANT--------------------------------------------//
  createButton.addEventListener("click", (evt) => {
+   formDiv.classList.remove("hide")
   plantCollection.classList.add("hide")
   const form = document.createElement("form")
   form.className = "form"
@@ -133,7 +140,8 @@ fetch("http://localhost:3000/families")
       plantCollection.classList.remove("hide")
       indexPagePlantCard(newPlant)
       form.innerHTML = ""
-      // soloDisplayOnDom(newPlant)
+      formDiv.classList.add("hide")
+
     })
   }) // form addEventListener
 
@@ -167,6 +175,9 @@ function indexPagePlantCard(plantObj){
   if (plantImg){
       plantImg.addEventListener("click", (evt) => {
           plantCollection.classList.add("hide")
+          genusButton.classList.add("hide")
+          createButton.classList.add("hide")
+          divDrop.classList.add("hide")
           // hide is display: none is css
           fetch(`http://localhost:3000/plants/${plantObj.id}`)
           .then((resp) => {
@@ -174,8 +185,7 @@ function indexPagePlantCard(plantObj){
           })
           .then((plant) => {
             soloDisplayOnDom(plant, plantCard)
-            genusButton.classList.add("hide")
-            createButton.classList.add("hide")
+
 
           })
         })// end of addEventListener
@@ -212,7 +222,7 @@ function soloDisplayOnDom(plant){
 
   const loveButton = document.createElement("img")
   loveButton.className = "love-button"
-  loveButton.src =  plant.loves < 50 ? "https://feea.org/wp-content/uploads/2018/05/fb-love-button.png" : `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
+  loveButton.src ="https://feea.org/wp-content/uploads/2018/05/fb-love-button.png"
 //---------------Plant Care --------------------------------
   const careh2 = document.createElement("h2")
   careh2.innerText = "Care"
@@ -257,6 +267,8 @@ function deleteOnePlant(deleteButton, plant, plantSoloCard){
         imageDiv.remove()
         plantCollection.classList.remove("hide")
         genusButton.classList.remove("hide")
+        createButton.classList.remove("hide")
+        divDrop.classList.remove("hide")
     })
   })
 }
@@ -289,11 +301,13 @@ function loveCounter(loveButton, plant, loves){
     .then((updatedPlant) => {
       loves.innerText =  parseInt(updatedPlant.loves) + " " + "loves"
   })//end of second .then
-}else {
-    loveButton.src = `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
-  }// end of else
-  }) // end of Lovebutton addEventListener
+  }
+}) // end of Lovebutton addEventListener
 }
+
+//-------------------------disLoveBtn-----------------------------------------------//
+
+
 
 
 
@@ -341,6 +355,7 @@ function goBackButton(backButton){
       soloContainer.innerHTML = "";
         genusButton.classList.remove("hide")
         createButton.classList.remove("hide")
+        divDrop.classList.remove("hide")
   })
 }
 
@@ -374,4 +389,15 @@ function filterGeneraCard(plantObject){
   filterName.innerText = plantObject.name
   plantFilterCard.append(filterImage, filterName)
   filterGenus.append(plantFilterCard)
+
+  plantFilterCard.addEventListener("click", (evt) => {
+        genusButton.classList.add("hide")
+        filterGenus.innerHTML = ""
+        divDrop.classList.add("hide")
+        soloDisplayOnDom(plantObject)
+  })
+
+
+
+
 }
