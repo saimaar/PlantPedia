@@ -1,10 +1,22 @@
 const divDropContent = document.getElementById('dropdown-genera')
+const genusAll = document.createElement("a")
+genusAll.className = "all"
+genusAll.innerText = "all";
+divDropContent.appendChild(genusAll)
+
+genusAll.addEventListener("click", (evt) => {
+  plantCollection.classList.remove("hide")
+  filterGenus.innerHTML = ""
+})
+
+
 const divPlantContent = document.getElementById('dropdown-plants')
 const genusButton = document.getElementById('button-genera')
 const plantButton =  document.getElementById('button-plant')
 const plantCollection = document.querySelector(".plant-collection")
 const main = document.querySelector(".main")
 const container = document.querySelector(".container")
+const filterGenus = document.querySelector(".filtered-genera")
 
 fetch("http://localhost:3000/families")
 .then((resp) => {
@@ -52,7 +64,6 @@ function indexPage(family){
     h3.innerText = plantObj.name
     plantCard.append(plantImg, h3)
     plantCollection.append(plantCard)
-
     plantImg.addEventListener("click", (evt) => {
         plantCollection.classList.add("hide")
         // hide is display: none is css
@@ -219,11 +230,29 @@ function goBackButton(backButton){
 function familyNameOnDrp(family){
     const genusName = document.createElement("a")
     genusName.innerText = family.name
-    divDropContent.appendChild(genusName)
-
+    divDropContent.append(genusName)
     genusName.addEventListener("click", (evt) => {
-      console.log("click me");
+      plantCollection.classList.add("hide")
+      let famObj = family
+      let plantArray = famObj.plants
+      filterGenus.innerHTML = ""
+      plantArray.forEach((plantObject) => {
+          filterGeneraCard(plantObject)
     })
+  })
+}
+
+
+function filterGeneraCard(plantObject){
+  const plantFilterCard = document.createElement("div")
+  plantFilterCard.className = "filter-card"
+  const filterImage = document.createElement("img")
+  filterImage.className = "solo-img"
+  filterImage.src = plantObject.image
+  const filterName = document.createElement("h2")
+  filterName.innerText = plantObject.name
+  plantFilterCard.append(filterImage, filterName)
+  filterGenus.append(plantFilterCard)
 }
 
 //====================plantName addEventListener ====================//

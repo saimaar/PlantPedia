@@ -187,9 +187,18 @@ bottom: -18%;
 }
 
 
+/* ---------------------------Filter Genera------------------------------------------------------- */
+.filtered-genera{
+  display: flex;
+}
 
-/* cursor: pointer;
-align-content: right;
-display: contents;
-font-size: 18px;
-padding: 15px 32px; */
+
+.filter-card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 0rem;
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  margin: 0rem 2rem;
+}
