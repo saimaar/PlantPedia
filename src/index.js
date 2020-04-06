@@ -12,10 +12,6 @@ genusAll.addEventListener("click", (evt) => {
 
 let famArr = [];
 
-const disLoveBtn = document.createElement("img")
-disLoveBtn.className = "love-button"
-disLoveBtn.src = `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`
-
 const divDrop = document.querySelector(".dropdown")
 
 
@@ -242,8 +238,12 @@ function soloDisplayOnDom(plant){
   deleteButton.classList.add("delete")
   deleteButton.innerText = "delete"
 
+  //----------name button ---------------------------------
+  const nameButton = document.createElement("button")
+  nameButton.innerText = "name"
 
-  soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton)
+  soloDiv.append(soloName, desch2, plantDesc, editButton, careh2, carePara, loves, loveButton
+  )
   plantSoloCard.append(soloImage, soloDiv, backButton, deleteButton)
   soloContainer.append(plantSoloCard)
 
@@ -251,6 +251,7 @@ function soloDisplayOnDom(plant){
   editForm(editButton, plantDesc, plant)
   loveCounter(loveButton, plant, loves)
   deleteOnePlant(deleteButton, plant, plantSoloCard)
+
 
 
 }//end of function
@@ -300,14 +301,13 @@ function loveCounter(loveButton, plant, loves){
     .then(resp => resp.json())
     .then((updatedPlant) => {
       loves.innerText =  parseInt(updatedPlant.loves) + " " + "loves"
+
   })//end of second .then
-  }
+} else {
+    loveButton.src = `https://cdn2.iconfinder.com/data/icons/hearts-16/100/004-512.png`;
+}
 }) // end of Lovebutton addEventListener
 }
-
-//-------------------------disLoveBtn-----------------------------------------------//
-
-
 
 
 
@@ -317,7 +317,7 @@ function loveCounter(loveButton, plant, loves){
 function editForm(editButton, plantDesc, plant){
   editButton.addEventListener("click", (evt) => {
     // debugger
-      if (editButton.disabled === false){
+      if (editButton.disabled === false){ //edit button working
         const editForm = document.createElement("form");
         editForm.innerHTML = `<textarea rows="4" cols="50" type="text" name="description"
         placeholder= "edit this description...."></textarea><br>
@@ -359,7 +359,7 @@ function goBackButton(backButton){
   })
 }
 
-//====================genusName addEventListener ====================//
+//====================family name on drop genusName addEventListener ====================//
 function familyNameOnDrp(family){
     const genusName = document.createElement("a")
     genusName.innerText = family.name
