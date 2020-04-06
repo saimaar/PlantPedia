@@ -5,4 +5,10 @@
   A <code>JavaScript</code> application that help Plant Lovers get information about House Plants!
 </div>
 
+<div align="center">
+  <sub>Built with ♥ by
+  Saima Rahman
+  </sub>
+</div>
+
 <br/>
