@@ -2,7 +2,7 @@
 <h4 align="center"> Get to know your plants. </h4>
 
 <div align="center">
-  A <code>JavaScript</code> application that helps Plant Lovers to get information about House Plants!
+  A <code>JavaScript</code> application that help Plant Lovers get information about House Plants!
 </div>
 
 <br/>
