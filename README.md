@@ -1,4 +1,4 @@
-<h1 align="center">PlantPedia	:herb: :leaves:</h1>
+<h1 align="center">:leaves:PlantPedia:leaves:</h1>
 <em><h4 align="center"> Get to know your plants. </h4></em>
 
 <div align="center">
