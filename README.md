@@ -7,7 +7,7 @@
 
 <div align="center">
   <sub>Built with ♥ by
-  Saima Rahman
+    <b>Saima Rahman</b>
   </sub>
 </div>
 
