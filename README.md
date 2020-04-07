@@ -38,3 +38,20 @@ This web app is built with the following:
 - Vanilla JavaScript [ES6]
 - Custom CSS3 styling 
 
+## Installation
+
+**Backend Installation:**
+
+- Clone [backend repo](https://github.com/saimaar/PlantPedia-API) to local machine `git clone <backend-repo-url>`
+- run `bundle install` to install required dependencies
+- run `rails db:create` to create a database locally.
+- run `rails db:migrate` to create tables into the database.
+- run `rails db:seed` to create seed data.
+- run `rails s` to run the server. 
+
+**Frontend Installation:** 
+
+- Clone this repo to your local machine `git clone <this-repo-url>`
+- Ensure *PlantPedia-API* is running locally on `http://localhost:3000/`
+- run `open index.html` on termial.
+
