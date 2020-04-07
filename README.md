@@ -28,7 +28,7 @@ Home Page          |  Plant Show Page
 ## Tech Stack
 This web app is built with the following:
 
-[**Backend**]https://github.com/saimaar/PlantPedia-API)
+**[Backend](https://github.com/saimaar/PlantPedia-API)**
 - Ruby [2.6.1]
 - Rails [~> 6.0.2] - MVC web framework used as an API
 - Active Model Serializers [~> 0.10.0] - Serializing API routes to JSON
